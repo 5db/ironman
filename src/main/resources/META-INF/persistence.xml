@@ -24,7 +24,7 @@
         <non-jta-data-source>java:jboss/datasources/IRONMAN</non-jta-data-source>
 
         <!--TODO: auto-scanning doesn't appear to work, to investigate later-->
-        <class>com.ironman.domain.Person</class>
+        <class>com.ironman.domain.ListingStatus</class>
 
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

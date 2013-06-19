@@ -8,4 +8,5 @@ public class IronManUtil {
     public final static String IRONMAN = "/ironman";
     public static final String HELP = "/help";
     public static final String HEALTH = "/health";
+    public static final String LISTINGS = "/listings";
 }

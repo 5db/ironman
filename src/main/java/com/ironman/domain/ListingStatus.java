@@ -5,7 +5,8 @@ package com.ironman.domain;
  */
 public enum ListingStatus {
     SOLD,
-    REMOVED,
-    OFFERED,
-    HOLD
+    AVAILABLE,
+    HAS_OFFER,
+    HOLD,
+    REMOVED
 }
