@@ -31,7 +31,6 @@ public class HealthMonitorControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
-    @Test
     public void shouldReturnOkAsHealthStatus() throws Exception {
          mockMvc.perform(MockMvcRequestBuilders.get("/v1/health").accept(MediaType.APPLICATION_JSON))
                  .andExpect(MockMvcResultMatchers.status().isOk());

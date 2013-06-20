@@ -1,20 +1,19 @@
 package com.ironman.controller;
 
 import com.ironman.domain.Listing;
-import com.ironman.domain.ListingStatus;
-import com.ironman.service.ListingService;
+import com.ironman.repository.ListingRepository;
 import com.ironman.util.IronManUtil;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author jsingh on 2013-06-19 at 2:42 PM
@@ -23,36 +22,30 @@ import java.util.List;
 @RequestMapping(value = IronManUtil.V1 + IronManUtil.LISTINGS)
 public class ListingController {
 
+    @Autowired
+    ListingRepository listingRepository;
+
     private static Logger log = Logger.getLogger(ListingController.class);
 
-    ListingService listingService;
-
-    @Autowired
-    public void setListingService(ListingService listingService) {
-        this.listingService = listingService;
-    }
-
     @RequestMapping(method = RequestMethod.GET, headers = "Accept=application/json")
-    public @ResponseBody List<Listing> getListingsByPrice(
-            @RequestParam(value = "priceGe", required = false) BigDecimal priceGe,
-            @RequestParam(value = "priceLe", required = false) BigDecimal priceLe,
-            @RequestParam(value = "status", required = false) ListingStatus status,
-            @RequestParam(value = "city", required = false, defaultValue = "BRAMPTON") String city) {
-        log.info("Serving GET " + IronManUtil.V1 + IronManUtil.LISTINGS + IronManUtil.PRICE);
-        List<Listing> listings = null;
+    @ResponseBody
+    public PageResource<Listing> getListings(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "paginationOrder", required = false, defaultValue = "DESC") String paginationOrder,
+            @RequestParam(value = "paginationField", required = false, defaultValue = "dateCreated") String paginationField) {
+        log.info("Serving GET " + IronManUtil.V1 + IronManUtil.LISTINGS);
 
-        if(priceGe != null && !priceGe.equals(BigDecimal.ZERO) && priceLe !=  null && !priceLe.equals(BigDecimal.ZERO)) {
-            if(StringUtils.isNotEmpty(city)) {
-                listings = listingService.getListingsByPriceAndCity(priceGe, priceLe, city);
-            } else {
-                listings = listingService.getListingsByPrice(priceGe, priceLe);
-            }
-        } else if(StringUtils.isNotEmpty(status.name())) {
-            listings = listingService.getListingsByListingStatus(status);
-        } else if (StringUtils.isNotEmpty(city)) {
-            listings = listingService.getListingsByCity(city);
+        Sort sort = null;
+        if(paginationOrder.equals(Sort.Direction.DESC.name())) {
+            sort = new Sort(Sort.Direction.DESC, paginationField);
+        } else if(paginationOrder.equals(Sort.Direction.ASC.name())) {
+            sort = new Sort(Sort.Direction.ASC, paginationField);
         }
 
-        return listings;
+        Pageable pageable = new PageRequest(page, (size > 50 ? 50 : size), sort);
+        Page<Listing> pageResult = listingRepository.findAll(pageable);
+
+        return new PageResource<>(pageResult, "page", "size");
     }
 }
