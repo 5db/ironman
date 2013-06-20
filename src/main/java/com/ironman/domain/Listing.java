@@ -8,24 +8,9 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "LISTINGS")
-@NamedQueries({
-        @NamedQuery(name = "Listing.findListingsByListingStatus",
-                query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.listingStatus = :listingStatus"),
-        @NamedQuery(name = "Listing.findListingsByPrice",
-                query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.listedPrice >= :priceGe " +
-                        "AND l.listedPrice <= :priceLe"),
-        @NamedQuery(name = "Listing.findListingsByPriceAndCity",
-                query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.city LIKE :city " +
-                        "AND l.listedPrice >= :priceGe " +
-                        "AND l.listedPrice <= :priceLe"),
-        @NamedQuery(name = "Listing.findListingsByCity",
-                query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.city LIKE :city"),
-})
 public class Listing extends BaseObject {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "LISTING_ID", unique = true, nullable = false)
