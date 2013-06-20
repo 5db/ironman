@@ -16,18 +16,14 @@ import java.math.BigDecimal;
                 query = "SELECT DISTINCT l FROM Listing l " +
                         "WHERE l.listedPrice >= :priceGe " +
                         "AND l.listedPrice <= :priceLe"),
-        @NamedQuery(name = "Listing.findListingsByBedrooms",
+        @NamedQuery(name = "Listing.findListingsByPriceAndCity",
                 query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.bedrooms = :bedrooms"),
-        @NamedQuery(name = "Listing.findListingsByProvince",
+                        "WHERE l.city LIKE :city " +
+                        "AND l.listedPrice >= :priceGe " +
+                        "AND l.listedPrice <= :priceLe"),
+        @NamedQuery(name = "Listing.findListingsByCity",
                 query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.province = :province"),
-        @NamedQuery(name = "Listing.findListingsByListingCity",
-                query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.city = :city"),
-        @NamedQuery(name = "Listing.findListingsByListingPostalCode",
-                query = "SELECT DISTINCT l FROM Listing l " +
-                        "WHERE l.postalCode LIKE :postalCode"),
+                        "WHERE l.city LIKE :city"),
 })
 public class Listing extends BaseObject {
 
@@ -35,7 +31,6 @@ public class Listing extends BaseObject {
     @Column(name = "LISTING_ID", unique = true, nullable = false)
     private long listingId;
 
-    @Lob
     @Column(name = "PICTURE")
     private byte[] picture;
 
@@ -46,7 +41,7 @@ public class Listing extends BaseObject {
     private float bedrooms;
 
     @Column(name = "BATHROOMS", nullable = false)
-    private String bathrooms;
+    private float bathrooms;
 
     @Column(name = "PROPERTY_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -95,11 +90,11 @@ public class Listing extends BaseObject {
         this.bedrooms = bedrooms;
     }
 
-    public String getBathrooms() {
+    public float getBathrooms() {
         return bathrooms;
     }
 
-    public void setBathrooms(String bathrooms) {
+    public void setBathrooms(float bathrooms) {
         this.bathrooms = bathrooms;
     }
 

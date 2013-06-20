@@ -25,6 +25,7 @@
 
         <!--TODO: auto-scanning doesn't appear to work, to investigate later-->
         <class>com.ironman.domain.ListingStatus</class>
+        <class>com.ironman.domain.Listing</class>
 
         <properties>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

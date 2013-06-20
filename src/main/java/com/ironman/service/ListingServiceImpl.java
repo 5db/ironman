@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * @author jsingh on 2013-06-19 at 2:20 PM
  */
+@SuppressWarnings("unchecked")
 @Service
 public class ListingServiceImpl implements ListingService {
 
@@ -39,26 +40,16 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public List<Listing> getListingsByBedrooms(float bedrooms) {
-        return entityManager.createNamedQuery("Listing.findListingsByBedrooms")
-                .setParameter("bedrooms", bedrooms).getResultList();
-    }
-
-    @Override
-    public List<Listing> getListingsByProvince(String province) {
-        return entityManager.createNamedQuery("Listing.findListingsByProvince")
-                .setParameter("province", province).getResultList();
-    }
-
-    @Override
-    public List<Listing> getListingsByCity(String city) {
-        return entityManager.createNamedQuery("Listing.findListingsByListingCity")
+    public List<Listing> getListingsByPriceAndCity(BigDecimal priceGe, BigDecimal priceLe, String city) {
+        return  entityManager.createNamedQuery("Listing.findListingsByPriceAndCity")
+                .setParameter("priceGe", priceGe)
+                .setParameter("priceLe", priceLe)
                 .setParameter("city", city).getResultList();
     }
 
     @Override
-    public List<Listing> getListingsByPostalCode(String postalCode) {
-        return entityManager.createNamedQuery("Listing.findListingsByListingPostalCode")
-                .setParameter("postalCode", postalCode).getResultList();
+    public List<Listing> getListingsByCity(String city) {
+        return entityManager.createNamedQuery("Listing.findListingsByCity")
+                .setParameter("city", city).getResultList();
     }
 }

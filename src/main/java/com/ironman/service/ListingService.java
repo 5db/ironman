@@ -14,11 +14,7 @@ public interface ListingService {
 
     List<Listing> getListingsByPrice(BigDecimal priceGe, BigDecimal priceLe);
 
-    List<Listing> getListingsByBedrooms(float bedrooms);
-
-    List<Listing> getListingsByProvince(String province);
+    List<Listing> getListingsByPriceAndCity(BigDecimal priceGe, BigDecimal priceLe, String city);
 
     List<Listing> getListingsByCity(String city);
-
-    List<Listing> getListingsByPostalCode(String postalCode);
 }

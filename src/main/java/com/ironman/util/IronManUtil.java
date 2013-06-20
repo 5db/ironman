@@ -9,4 +9,6 @@ public class IronManUtil {
     public static final String HELP = "/help";
     public static final String HEALTH = "/health";
     public static final String LISTINGS = "/listings";
+    public static final String PRICE = "/price";
+    public static final String CITY = "/city";
 }
