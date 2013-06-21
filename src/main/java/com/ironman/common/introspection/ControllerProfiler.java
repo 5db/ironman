@@ -1,5 +1,8 @@
 package com.ironman.common.introspection;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Statistics;
 import org.apache.log4j.Logger;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -7,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * @author jsingh on 6/7/13 at 1:46 PM
@@ -35,5 +39,18 @@ public class ControllerProfiler implements HandlerInterceptor {
         threadLocalData.getControllerData().setStartTime(0);
         String method = ((HandlerMethod) o).getMethod().getName();
         log.info("Performance: " + method + ": " + ((int) ((endTime - startTime) / 1e6)) + " ms");
+
+        CacheManager cacheManager = CacheManager.create(getClass().getResource("ehcache.xml"));
+        if(cacheManager != null) {
+            log.info("Cache status: " + cacheManager.getStatus());
+            Cache lCache = cacheManager.getCache("listings");
+            if(lCache != null) {
+                Statistics stat = lCache.getStatistics();
+                log.info("Cache hits: " + stat.getCacheHits() +
+                        ", Cache misses: " + stat.getCacheMisses() +
+                        ", Average get time: " + stat.getAverageGetTime() +
+                        ", Average search time: " + stat.getAverageSearchTime());
+            }
+        }
     }
 }

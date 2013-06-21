@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache>
-    <defaultCache eternal="true" maxElementsInMemory="100" overflowToDisk="false" />
-    <cache name="listings" eternal="false" maxElementsInMemory="200" overflowtodisk="false" />
+    <defaultCache maxElementsInMemory="1000"
+                  eternal="false"
+                  timeToLiveSeconds="120"
+                  statistics="true"/>
+    <cache name="listings"
+           maxElementsInMemory="1000"
+           eternal="false"
+           overflowToDisk="false"
+           statistics="true"/>
 </ehcache>

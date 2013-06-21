@@ -1,6 +1,11 @@
 package com.ironman.domain;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 /**
@@ -8,6 +13,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "LISTINGS")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Listing extends BaseObject {
 
     private static final long serialVersionUID = 1L;
