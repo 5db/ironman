@@ -9,7 +9,7 @@ import java.util.Date;
  * @author jsingh on 2013-06-18 at 11:36 PM
  */
 @MappedSuperclass
-public class BaseObject implements Serializable {
+public class BaseObject {
 
     @Column(name = "DATE_CREATED", nullable = false, columnDefinition = "timestamp DEFAULT CURRENT_DATE")
     private Date dateCreated;

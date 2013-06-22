@@ -48,4 +48,26 @@ public class ListingController {
 
         return new PageResource<>(pageResult, "page", "size");
     }
+
+    @RequestMapping(value = "/p2", method = RequestMethod.GET, headers = "Accept=application/json")
+    @ResponseBody
+    public PageResource<Listing> getListings2(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "po", required = false, defaultValue = "DESC") String po,
+            @RequestParam(value = "pf", required = false, defaultValue = "dateCreated") String pf) {
+        log.info("Serving GET " + IronManUtil.V1 + IronManUtil.LISTINGS);
+
+        Sort sort = null;
+        if(po.equals(Sort.Direction.DESC.name())) {
+            sort = new Sort(Sort.Direction.DESC, pf);
+        } else if(po.equals(Sort.Direction.ASC.name())) {
+            sort = new Sort(Sort.Direction.ASC, pf);
+        }
+
+        Pageable pageable = new PageRequest(page, (size > 50 ? 50 : size), sort);
+        Page<Listing> pageResult = listingRepository.findListingByListingId(2695, pageable);
+
+        return new PageResource<>(pageResult, "page", "size");
+    }
 }

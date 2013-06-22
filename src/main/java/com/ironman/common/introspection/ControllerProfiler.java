@@ -2,8 +2,9 @@ package com.ironman.common.introspection;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Statistics;
+import net.sf.ehcache.statistics.StatisticsGateway;
 import org.apache.log4j.Logger;
+import org.hibernate.stat.Statistics;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,14 +43,16 @@ public class ControllerProfiler implements HandlerInterceptor {
 
         CacheManager cacheManager = CacheManager.create(getClass().getResource("ehcache.xml"));
         if(cacheManager != null) {
-            log.info("Cache status: " + cacheManager.getStatus());
-            Cache lCache = cacheManager.getCache("listings");
-            if(lCache != null) {
-                Statistics stat = lCache.getStatistics();
-                log.info("Cache hits: " + stat.getCacheHits() +
-                        ", Cache misses: " + stat.getCacheMisses() +
-                        ", Average get time: " + stat.getAverageGetTime() +
-                        ", Average search time: " + stat.getAverageSearchTime());
+            String[] caches =  cacheManager.getCacheNames();
+            for(String cac : caches) {
+                Cache cach = cacheManager.getCache(cac);
+                if(cach.getSize() > 0) {
+                    StatisticsGateway statistics = cach.getStatistics();
+                    log.info("Cache hit : " + statistics.cacheHitCount());
+                    log.info("Cache miss : " + statistics.cacheMissCount());
+                    log.info("Cache get : " + statistics.cacheGetOperation().count().value());
+                    log.info("Cache size: " + statistics.getSize());
+                }
             }
         }
     }

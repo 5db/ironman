@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache>
-    <defaultCache maxElementsInMemory="1000"
+<ehcache name="cacheManager">
+    <defaultCache maxBytesLocalHeap="20M"
                   eternal="false"
                   timeToLiveSeconds="120"
                   statistics="true"/>
-    <cache name="listings"
-           maxElementsInMemory="1000"
-           eternal="false"
-           overflowToDisk="false"
-           statistics="true"/>
 </ehcache>
