@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "LISTINGS")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Listing extends BaseObject implements Serializable {
 
     private static final long serialVersionUID = 1L;

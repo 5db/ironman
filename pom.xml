@@ -88,19 +88,20 @@
         <!-- Logging Framework -->
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${org.slf4j.version}</version>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.0</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${org.slf4j.version}</version>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.0</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>${org.slf4j.version}</version>
+            <version>1.7.0</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -238,6 +239,10 @@
             <id>springsource-repo</id>
             <name>SpringSource Repository</name>
             <url>http://repo.springsource.org/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.release</id>
+            <url>http://repository.springsource.com/maven/bundles/release/</url>
         </repository>
     </repositories>
     <build>

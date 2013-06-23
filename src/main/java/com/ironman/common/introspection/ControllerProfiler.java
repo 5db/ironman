@@ -37,7 +37,7 @@ public class ControllerProfiler implements HandlerInterceptor {
         //  Reset the start time (to make it obvious if stale data is used mistakenly).
         threadLocalData.getControllerData().setStartTime(0);
         String method = ((HandlerMethod) o).getMethod().getName();
-        log.info("Performance: " + method + ": " + ((int) ((endTime - startTime) / 1e6)) + " ms");
+        log.info("Performance: [" + method + ": " + ((int) ((endTime - startTime) / 1e6)) + " ms]");
 
 //        if(log.isDebugEnabled()) {
             CacheManager cacheManager = CacheManager.create(getClass().getResource("ehcache.xml"));
@@ -48,7 +48,8 @@ public class ControllerProfiler implements HandlerInterceptor {
                     if(cache.getSize() > 0) {
                         StatisticsGateway statistics = cache.getStatistics();
                         log.info("CacheName=" + cacheName
-                                + ", CacheStatistics=[Hit: " + statistics.cacheHitCount()
+                                + ", CacheStatistics=[ElementsInMemory:" + statistics.getSize()
+                                + ", Hit: " + statistics.cacheHitCount()
                                 + ", Misses:" + statistics.cacheMissCount()
                                 + ", Expired:" + statistics.cacheExpiredCount()
                                 + ", Evicted:" + statistics.cacheEvictedCount()

@@ -36,8 +36,6 @@ public class ListingController {
             @RequestParam(value = "size", required = false, defaultValue = "10") int size,
             @RequestParam(value = "po", required = false, defaultValue = "DESC") String po,
             @RequestParam(value = "pf", required = false, defaultValue = "dateCreated") String pf) {
-        log.info("Serving GET " + IronManUtil.V1 + IronManUtil.LISTINGS);
-
         Sort sort = null;
         if(po.equals(Sort.Direction.DESC.name())) {
             sort = new Sort(Sort.Direction.DESC, pf);
@@ -59,8 +57,6 @@ public class ListingController {
             @RequestParam(value = "po", required = false, defaultValue = "DESC") String po,
             @RequestParam(value = "fi") float fi,
             @RequestParam(value = "pf", required = false, defaultValue = "dateCreated") String pf) {
-        log.info("Serving GET " + IronManUtil.V1 + IronManUtil.LISTINGS);
-
         Sort sort = null;
         if(po.equals(Sort.Direction.DESC.name())) {
             sort = new Sort(Sort.Direction.DESC, pf);

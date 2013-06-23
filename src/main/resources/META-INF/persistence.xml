@@ -24,7 +24,6 @@
         <non-jta-data-source>java:jboss/datasources/IRONMAN</non-jta-data-source>
 
         <!--TODO: auto-scanning doesn't appear to work, to investigate later-->
-        <class>com.ironman.domain.ListingStatus</class>
         <class>com.ironman.domain.Listing</class>
 
         <properties>

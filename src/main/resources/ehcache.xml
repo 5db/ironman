@@ -2,6 +2,6 @@
 <ehcache name="cacheManager">
     <defaultCache maxBytesLocalHeap="20M"
                   eternal="false"
-                  timeToLiveSeconds="120"
+                  timeToLiveSeconds="600"
                   statistics="true"/>
 </ehcache>
