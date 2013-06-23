@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
+
 /**
  * @author jsingh on 2013-06-19 at 2:42 PM
  */
@@ -55,6 +57,7 @@ public class ListingController {
             @RequestParam(value = "page", required = false, defaultValue = "1") int page,
             @RequestParam(value = "size", required = false, defaultValue = "10") int size,
             @RequestParam(value = "po", required = false, defaultValue = "DESC") String po,
+            @RequestParam(value = "fi") float fi,
             @RequestParam(value = "pf", required = false, defaultValue = "dateCreated") String pf) {
         log.info("Serving GET " + IronManUtil.V1 + IronManUtil.LISTINGS);
 
@@ -66,7 +69,7 @@ public class ListingController {
         }
 
         Pageable pageable = new PageRequest(page, (size > 50 ? 50 : size), sort);
-        Page<Listing> pageResult = listingRepository.findListingByListingId(2695, pageable);
+        Page<Listing> pageResult = listingRepository.findByBathroomsLessThan(fi, pageable);
 
         return new PageResource<>(pageResult, "page", "size");
     }
