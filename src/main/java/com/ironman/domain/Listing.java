@@ -23,8 +23,8 @@ public class Listing extends BaseObject implements Serializable {
     @Column(name = "LISTING_ID", unique = true, nullable = false)
     private long listingId;
 
-    @Column(name = "PICTURE")
-    private byte[] picture;
+    @Column(name = "PICTURE_URL")
+    private String picture;
 
     @Column(name = "LISTED_PRICE", nullable = false)
     private BigDecimal listedPrice;
@@ -122,11 +122,11 @@ public class Listing extends BaseObject implements Serializable {
         this.listingStatus = listingStatus;
     }
 
-    public byte[] getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(byte[] picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 

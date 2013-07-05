@@ -4,7 +4,7 @@ DROP SEQUENCE listing_pkey_seq;
 CREATE SEQUENCE listing_pkey_seq INCREMENT 1 START 1000;
 
 CREATE TABLE LISTINGS (LISTING_ID BIGINT NOT NULL,
-                      PICTURE BYTEA,
+                      PICTURE_URL VARCHAR(200),
                       LISTED_PRICE NUMERIC NOT NULL,
                       BEDROOMS FLOAT4 NOT NULL ,
                       BATHROOMS FLOAT4 NOT NULL ,

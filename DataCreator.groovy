@@ -19,18 +19,19 @@ class DataCreator  {
  */
 class IronManCreator extends AbstractCreator {
     public static final String PG_INSERT_INTO_LISTINGS = """
-        INSERT INTO LISTINGS(LISTING_ID, LISTED_PRICE, BEDROOMS, BATHROOMS, PROPERTY_TYPE, PROPERTY_TAX,
+        INSERT INTO LISTINGS(LISTING_ID, PICTURE_URL, LISTED_PRICE, BEDROOMS, BATHROOMS, PROPERTY_TYPE, PROPERTY_TAX,
                     DESCRIPTION, LISTING_STATUS, PROVINCE, CITY, POSTAL_CODE, DATE_CREATED, DATE_UPDATED)
-        VALUES(nextval('listing_pkey_seq'), ?, ?, ?, ?, ?, 
+        VALUES(nextval('listing_pkey_seq'), ?, ?, ?, ?, ?, ?,
             ?, ?, ?, ?, ?, NOW(), NOW()) """
-    public static final int totalData = 50000
+    public static final int TOTAL_DATA = 50000
 
     @Override
     void create() {
         int counter = 0
 
-        while(counter < totalData) {
+        while(counter < TOTAL_DATA) {
             postgreSqlDb.execute(PG_INSERT_INTO_LISTINGS, [
+                    getImageUrl(),
                     new Random().nextInt(1000000 - 400000) + 400000,
                     new Random().nextInt(5 - 1) + 1,
                     new Random().nextInt(4 - 1) + 1,
@@ -78,6 +79,13 @@ class IronManCreator extends AbstractCreator {
         def postalCodes = ["M9Z3G9", "M9G3G7", "L5G9D9", "B7U3R4", "U8Y3R4", "N7H2H0",
                 "G7GT7T", "L6P2Y2", "R4RT5T", "F9H3D9"]
         return postalCodes.get(new Random().nextInt(postalCodes.size()))
+    }
+
+    String getImageUrl() {
+        def imageUrls = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg",
+                            "9.jpg", "10.jpg", "11.jpg", "12.jpg", "13.jpg", "14.jpg", "15.jpg", "16.jpg",
+                            "17.jpg"]
+        return imageUrls.get(new Random().nextInt(imageUrls.size()))
     }
 }
 
